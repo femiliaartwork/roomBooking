@@ -1,0 +1,30 @@
+.container {
+    display: inline-flex;
+    gap:2em
+}
+
+.room {
+    text-align: center;
+    line-height: 25px;
+}
+
+.available {
+    border: 2px solid black;
+    
+}
+
+.unavailable {
+    border:2px solid black;
+    color:white;
+    background-color: rgb(234, 33, 33);
+}
+
+.reserved {
+    border: 2px solid black;
+    background-color: cadetblue;
+}
+
+.my-reservation {
+    border: 2px solid black;
+    background-color: chartreuse;
+}
