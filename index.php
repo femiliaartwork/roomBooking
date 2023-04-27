@@ -19,7 +19,7 @@
     <div>
         <nav class="navbar navbar-light bg-dark justify-content-between">
             <a class="navbar-brand">
-                <img src="./assets/images/logo-international-primary.png" height="50px"/>
+                <img src="./assets/images/logo-shorthand-horizontal.png" height="50px"/>
             </a>
             <form class="form-inline" action="">
                 <button class="btn btn-primary btn-md" type="submit">Login / Sign up</button>
@@ -27,7 +27,7 @@
         </nav>
     </div>
 
-    <div class="container">
+    <div class="container" style="margin-top: 2em">
         <div class="available room">Available</div>
         <div class="unavailable room">Unavailable</div>
         <div class="reserved room">Reserved</div>
