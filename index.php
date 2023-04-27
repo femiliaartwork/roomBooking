@@ -15,25 +15,15 @@
 </head>
 
 <body>
-    
-    <div>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="margin-bottom:10px;">
-            <ul class="navbar-nav">
-                <li></li>
 
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Active</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-            </ul>
+    <div>
+        <nav class="navbar navbar-light bg-dark justify-content-between">
+            <a class="navbar-brand">
+                <img src="./assets/images/logo-international-primary.png" height="50px"/>
+            </a>
+            <form class="form-inline" action="">
+                <button class="btn btn-primary btn-md" type="submit">Login / Sign up</button>
+            </form>
         </nav>
     </div>
 
