@@ -1,6 +1,6 @@
 .container {
     display: inline-flex;
-    gap:2em
+    gap: 2em
 }
 
 .room {
@@ -10,12 +10,12 @@
 
 .available {
     border: 2px solid black;
-    
+
 }
 
 .unavailable {
-    border:2px solid black;
-    color:white;
+    border: 2px solid black;
+    color: white;
     background-color: rgb(234, 33, 33);
 }
 
@@ -27,4 +27,10 @@
 .my-reservation {
     border: 2px solid black;
     background-color: chartreuse;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
