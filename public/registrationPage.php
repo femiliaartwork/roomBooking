@@ -1,7 +1,6 @@
 <?php
 
     if (isset($_POST['submit'])) {
-        echo 'Form Submitted';
 
         $fName = $_POST["firstName"];
         $lName = $_POST["lastName"];
