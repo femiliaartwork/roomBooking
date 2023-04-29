@@ -1,5 +1,38 @@
 <?php
-include_once './db_connection.php'
+
+session_start();
+
+if (isset($_POST['submit'])) {
+
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    require_once './db_connection.php';
+
+    // SQL query
+    $select = "SELECT * FROM user WHERE email='$email' && password= '$password'";
+
+    $result = mysqli_query($conn, $select);
+
+    // print_r($result);
+
+    if (mysqli_num_rows($result) > 0) {
+
+        $row = mysqli_fetch_array($result);
+
+        if ($row['userType'] == 'admin') {
+            $_SESSION['admin_name'] = $row['firstName'] .' '. $row['lastName'] ;
+
+            header('location:./public/adminPage.php');
+        } else if ($row['userType'] == 'student') {
+            $_SESSION['student_name'] = $row['firstName'] .' '. $row['lastName'];
+
+            header('location:./public/studentPage.php');
+        }
+    } else {
+        $error[] = 'Incorrect email or password!';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +53,7 @@ include_once './db_connection.php'
 
 <body>
 
-    <form>
+    <form action="" method="post">
         <section class="vh-100" style="background-color: white;">
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -42,19 +75,28 @@ include_once './db_connection.php'
 
                                             <h2 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h2>
 
+                                            <?php
+                                            if (isset($error)) {
+                                                foreach ($error as $error) {
+                                                    echo '<span class="error-msg">' . $error . '</span>';
+                                                }
+                                            }
+                                            ?>
+
                                             <div class="form-outline mb-4">
-                                                <input type="email" id="form2Example17" class="form-control form-control-lg" placeholder="Email"/>
+                                                <input type="email" id="form2Example17" class="form-control form-control-lg" placeholder="Email" name="email" />
                                                 <label class="form-label" for="form2Example17">Email address</label>
                                             </div>
 
                                             <div class="form-outline mb-4">
-                                                <input type="password" id="form2Example27" class="form-control form-control-lg" placeholder="Password"/>
+                                                <input type="password" id="form2Example27" class="form-control form-control-lg" placeholder="Password" name="password" />
                                                 <label class="form-label" for="form2Example27">Password</label>
                                             </div>
 
                                             <div class="pt-1 mb-4">
-                                                
-                                                <a class="btn btn-dark btn-lg btn-block" href="#" role="button">Login</a>
+
+
+                                                <input class="btn btn-dark btn-lg btn-block" type="submit" value="Login" name="submit">
                                             </div>
 
                                             <a class="small text-muted" href="#!">Forgot password?</a>
