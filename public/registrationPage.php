@@ -1,3 +1,36 @@
+<?php
+
+    if (isset($_POST['submit'])) {
+        echo 'Form Submitted';
+
+        $fName = $_POST["firstName"];
+        $lName = $_POST["lastName"];
+        $email = $_POST["email"];
+        $address = $_POST["address"];
+        $userType = $_POST["inlineRadioOptions"];
+        $password = $_POST["password"];
+
+        require_once '../db_connection.php';
+
+        // SQL query
+        $select = "SELECT * FROM user WHERE email='$email' && password= '$password'";
+
+        $result = mysqli_query($conn, $select);
+
+        // print_r($result);
+
+        if (mysqli_num_rows($result) > 0) {
+            $error[] = 'User Already existed';
+            
+        } else {
+            $insert = "INSERT INTO user(firstName, lastName, userType, email, password, address) VALUES('$fName', '$lName', '$userType', '$email', '$password', '$address')";
+            mysqli_query($conn, $insert);
+            header('location:../index.php');
+        }
+
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +47,7 @@
 </head>
 
 <body>
-    <form>
+    <form action="" method="post">
         <section class="h-100 bg-white">
             <div class="container py-5 h-100" style="margin-top: 5rem">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -28,16 +61,23 @@
                                     <div class="card-body p-md-5 text-black">
                                         <h3 class="mb-5 text-uppercase">Account registration form</h3>
 
+                                            <?php
+                                                if(isset($error)) {
+                                                    foreach($error as $error) {
+                                                        echo '<span class="error-msg">'.$error.'</span>';
+                                                    }
+                                                }
+                                            ?>
                                         <div class="row">
                                             <div class="col-md-6 mb-4">
                                                 <div class="form-outline">
-                                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" placeholder="First Name"/>
+                                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" placeholder="First Name" name="firstName" required/>
                                                     <label class="form-label" for="form3Example1m">First name</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 mb-4">
                                                 <div class="form-outline">
-                                                    <input type="text" id="form3Example1n" class="form-control form-control-lg" placeholder="Last Name"/>
+                                                    <input type="text" id="form3Example1n" class="form-control form-control-lg" placeholder="Last Name" name="lastName" required/>
                                                     <label class="form-label" for="form3Example1n">Last name</label>
                                                 </div>
                                             </div>
@@ -46,7 +86,7 @@
 
 
                                         <div class="form-outline mb-4">
-                                            <input type="text" id="form3Example8" class="form-control form-control-lg" placeholder="Address" />
+                                            <input type="text" id="form3Example8" class="form-control form-control-lg" placeholder="Address" name="address" required/>
                                             <label class="form-label" for="form3Example8">Address</label>
                                         </div>
 
@@ -55,12 +95,12 @@
                                             <h6 class="mb-1 me-4">Account Type: </h6>
 
                                             <div class="form-check form-check-inline mb-0 me-4" style="padding-left: 1rem;">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="adminUser" value="option1" />
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="adminUser" value="admin" required/>
                                                 <label class="form-check-label" for="adminUser">Admin</label>
                                             </div>
 
                                             <div class="form-check form-check-inline mb-0 me-4">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="student" value="option2" />
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="student" value="student" required/>
                                                 <label class="form-check-label" for="student">Student</label>
                                             </div>
 
@@ -68,20 +108,20 @@
 
 
                                         <div class="form-outline mb-4">
-                                            <input type="text" id="form3Example97" class="form-control form-control-lg" placeholder="Email"/>
+                                            <input type="text" id="form3Example97" class="form-control form-control-lg" placeholder="Email" name="email" required/>
                                             <label class="form-label" for="form3Example97">Email</label>
                                         </div>
 
 
                                         <div class="form-outline mb-4">
-                                            <input type="password" id="form3Example97" class="form-control form-control-lg" placeholder="Password" />
+                                            <input type="password" id="form3Example97" class="form-control form-control-lg" placeholder="Password" name="password" required/>
                                             <label class="form-label" for="form3Example97">Password</label>
                                         </div>
 
                                         <div class="d-flex justify-content-end pt-3">
 
                                             <input class="btn btn-light btn-lg" type="reset" value="Reset Form">
-                                            <input class="btn btn-warning btn-lg ms-2" type="submit" value="Register">
+                                            <input class="btn btn-warning btn-lg ms-2" type="submit" value="Register" name="submit">
 
                                         </div>
 

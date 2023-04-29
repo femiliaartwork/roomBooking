@@ -3,12 +3,14 @@
     $dbServer = 'localhost';
     $dbUsername = 'root';
     $dbPassword = '';
-    $dbName = 'test';
+    $dbName = 'roomBooking';
 
     $conn = mysqli_connect($dbServer, $dbUsername, $dbPassword, $dbName);
     if (!$conn) {
         die("fail");
-    } 
+    } else {
+        // echo 'Success';
+    }
 
         
 
