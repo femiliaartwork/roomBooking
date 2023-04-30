@@ -87,12 +87,12 @@ if (isset($_POST['submit'])) {
                                             ?>
 
                                             <div class="form-outline mb-4">
-                                                <input type="email" id="form2Example17" class="form-control form-control-lg" placeholder="Email" name="email" />
+                                                <input type="email" id="form2Example17" class="form-control form-control-lg" placeholder="Email" name="email" required/>
                                                 <label class="form-label" for="form2Example17">Email address</label>
                                             </div>
 
                                             <div class="form-outline mb-4">
-                                                <input type="password" id="form2Example27" class="form-control form-control-lg" placeholder="Password" name="password" />
+                                                <input type="password" id="form2Example27" class="form-control form-control-lg" placeholder="Password" name="password" required />
                                                 <label class="form-label" for="form2Example27">Password</label>
                                             </div>
 
