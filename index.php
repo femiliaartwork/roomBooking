@@ -2,6 +2,7 @@
 
 session_start();
 
+
 if (isset($_POST['submit'])) {
 
     $email = $_POST["email"];
@@ -21,11 +22,13 @@ if (isset($_POST['submit'])) {
         $row = mysqli_fetch_array($result);
 
         if ($row['userType'] == 'admin') {
-            $_SESSION['admin_name'] = $row['firstName'] .' '. $row['lastName'] ;
+            $_SESSION['admin_name'] = $row['firstName'] . ' ' . $row['lastName'];
+            $_SESSION['admin_id'] = $row['user_id'];
 
             header('location:./public/adminPage.php');
         } else if ($row['userType'] == 'student') {
-            $_SESSION['student_name'] = $row['firstName'] .' '. $row['lastName'];
+            $_SESSION['student_name'] = $row['firstName'] . ' ' . $row['lastName'];
+            $_SESSION['student_id'] = $row['user_id'];
 
             header('location:./public/studentPage.php');
         }
@@ -71,7 +74,7 @@ if (isset($_POST['submit'])) {
                                             <!-- <div class="d-flex align-items-center mb-3 pb-1">
                                             <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
                                             <span class="h1 fw-bold mb-0">Logo</span>
-                                        </div> -->
+                                              </div> -->
 
                                             <h2 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h2>
 
