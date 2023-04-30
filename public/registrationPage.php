@@ -1,15 +1,16 @@
 <?php
 
+    include_once '../db_connection.php';
+
     if (isset($_POST['submit'])) {
 
-        $fName = $_POST["firstName"];
-        $lName = $_POST["lastName"];
-        $email = $_POST["email"];
-        $address = $_POST["address"];
-        $userType = $_POST["inlineRadioOptions"];
-        $password = $_POST["password"];
+        $fName = mysqli_real_escape_string($conn, $_POST['firstName']);
+        $lName = mysqli_real_escape_string($conn, $_POST['lastName']);
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $address = mysqli_real_escape_string($conn, $_POST['address']);
+        $userType = mysqli_real_escape_string($conn, $_POST['inlineRadioOptions']);
+        $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-        require_once '../db_connection.php';
 
         // SQL query
         $select = "SELECT * FROM user WHERE email='$email' && password= '$password'";
@@ -24,7 +25,11 @@
         } else {
             $insert = "INSERT INTO user(firstName, lastName, userType, email, password, address) VALUES('$fName', '$lName', '$userType', '$email', '$password', '$address')";
             mysqli_query($conn, $insert);
+
+            $_SESSION['msgSuccess'] = 'User account sucessfully created!' ;
+
             header('location:../index.php');
+
         }
 
     }
