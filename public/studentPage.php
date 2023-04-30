@@ -1,4 +1,6 @@
 <?php
+include_once '../db_connection.php';
+
 session_start();
 
 ?>
@@ -15,13 +17,17 @@ session_start();
     <link rel="stylesheet" href="../css/styles.css" />
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <title>Admin Page</title>
+    <title>Student Page</title>
 </head>
 
 <body>
     <h1 style="padding-left:1rem;">Welcome <span class="link-primary"><?php echo $_SESSION['student_name'] ?></span></h1>
 
+    <div style="padding-left:1rem;">
+        <a href="./studentBooking.php" class="btn btn-dark mb-3">Book a room</a>
+    </div>
     <div class="container">
+
         <table class="table table-hover text-center">
             <thead class="table-dark">
                 <tr>
@@ -32,16 +38,28 @@ session_start();
                 </tr>
             </thead>
             <tbody>
+                <?php
+                $sql = "SELECT * from booking where user_id = '" . $_SESSION['student_id'] . "'";
+                $result = mysqli_query($conn, $sql);
+                // check if there are any result that came back
+                $resultCheck = mysqli_num_rows($result);
 
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>
-                        <a href="" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
-                        <a href="" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
-                    </td>
-                </tr>
+                if ($resultCheck > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '<tr>
+                        <th scope="row">' . $row['booking_id'] . '</th>
+                        <td>' . $row['booking_date'] . '</td>
+                        <td>' . $row['room_id'] . '</td>
+                        <td>
+                            <a href="" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
+                            <a href="" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
+                        </td>
+                    </tr>';
+                    }
+                } else {
+                    echo "No results found";
+                }
+                ?>
 
             </tbody>
         </table>
