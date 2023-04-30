@@ -15,7 +15,7 @@ session_start();
     <link rel="stylesheet" href="../css/styles.css" />
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <title>Admin Page</title>
+    <title>Payment Page</title>
 </head>
 
 <body>
