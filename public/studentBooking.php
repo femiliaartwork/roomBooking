@@ -2,32 +2,29 @@
 
 include_once '../db_connection.php';
 
+session_start();
+
 if (isset($_POST['submit'])) {
 
-    $fName = mysqli_real_escape_string($conn, $_POST['firstName']);
-    $lName = mysqli_real_escape_string($conn, $_POST['lastName']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $address = mysqli_real_escape_string($conn, $_POST['address']);
-    $userType = mysqli_real_escape_string($conn, $_POST['inlineRadioOptions']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $roomName = mysqli_real_escape_string($conn, $_POST['room']);
+    $date = mysqli_real_escape_string($conn, $_POST['date']);
+    $time = mysqli_real_escape_string($conn, $_POST['time']);
+   
 
-
-    // SQL query
-    $select = "SELECT * FROM user WHERE email='$email' && password= '$password'";
+    // SQL query if the room is chosen but its not available then cannot book
+    $select = "SELECT * FROM room WHERE room_name ='$roomName' && availability = 1";
 
     $result = mysqli_query($conn, $select);
 
     // print_r($result);
 
-    if (mysqli_num_rows($result) > 0) {
-        $error[] = 'User Already existed';
+    if (mysqli_num_rows($result) == 0) {
+        $error[] = 'Room is not available for booking';
     } else {
-        $insert = "INSERT INTO user(firstName, lastName, userType, email, password, address) VALUES('$fName', '$lName', '$userType', '$email', '$password', '$address')";
-        mysqli_query($conn, $insert);
-
-        $_SESSION['msgSuccess'] = 'User account sucessfully created!';
-
-        header('location:../index.php');
+        $_SESSION['room_name'] = $roomName;
+        $_SESSION['date'] = $date;
+        $_SESSION['time'] = $time;
+        header('location:./payment.php?msg=booking in progress');
     }
 }
 ?>
@@ -56,15 +53,15 @@ if (isset($_POST['submit'])) {
 <body>
     <form action="" method="post">
         <section class="h-100 bg-white">
-            <div class="container py-5 h-100" style="margin-top: 5rem">
+            <div class="container py-5 h-100 w-100" style="margin-top: 5rem" >
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col">
-                        <div class="card card-registration my-4" style="width:max-content; height:max-content; margin-left:15rem; ">
+                        <div class="card card-registration my-4 w-100" style="width:max-content; height:max-content; margin-left:25rem; ">
                             <div class="row g-0">
                                 <div class="col-xl-6 d-none d-xl-block">
                                     <img src="../assets/images/logo-shorthand-horizontal.png" alt="Sample photo" class="img-fluid" style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
                                 </div>
-                                <div class="col-xl-6">
+                                <div class="col-xl-6 ">
                                     <div class="card-body p-md-5 text-black">
                                         <h3 class="mb-5 text-uppercase">Room Booking</h3>
 
@@ -75,20 +72,7 @@ if (isset($_POST['submit'])) {
                                             }
                                         }
                                         ?>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" id="form3Example1m" class="form-control form-control-lg" placeholder="First Name" name="firstName" required />
-                                                    <label class="form-label" for="form3Example1m">First name</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" id="form3Example1n" class="form-control form-control-lg" placeholder="Last Name" name="lastName" required />
-                                                    <label class="form-label" for="form3Example1n">Last name</label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
 
 
                                         <div class="form-outline mb-4">
@@ -112,18 +96,12 @@ if (isset($_POST['submit'])) {
 
 
                                         <div class="form-outline mb-4">
-                                            <input type="password" id="form3Example97" class="form-control form-control-lg" placeholder="Password" name="password" required />
-                                            <label class="form-label" for="form3Example97">Password</label>
-                                        </div>
-
-
-                                        <div class="form-outline mb-4">
-                                            <input type="date" id="datepicker" class="form-control form-control-lg" required>
+                                            <input type="date" id="datepicker" class="form-control form-control-lg" name="date" required>
                                             <label class="form-label" for="datepicker">Booking date</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="time" id="timepicker" class="form-control form-control-lg" required>
+                                            <input type="time" id="timepicker" class="form-control form-control-lg" name="time" required>
                                             <label class="form-label" for="timepicker">Booking time</label>
                                         </div>
 
