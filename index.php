@@ -1,5 +1,7 @@
 <?php
 
+include_once './db_connection.php';
+
 session_start();
 
 
@@ -8,7 +10,6 @@ if (isset($_POST['submit'])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    require_once './db_connection.php';
 
     // SQL query
     $select = "SELECT * FROM user WHERE email='$email' && password= '$password'";
@@ -69,6 +70,15 @@ if (isset($_POST['submit'])) {
                                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                     <div class="card-body p-4 p-lg-5 text-black">
 
+                                        <?php
+                                        if (isset($_GET['msg'])) {
+                                            $msg = $_GET['msg'];
+                                            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">'. $msg .                       
+                                            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                          </div>';
+                                        }
+                                        ?>
+
                                         <form>
 
                                             <!-- <div class="d-flex align-items-center mb-3 pb-1">
@@ -87,7 +97,7 @@ if (isset($_POST['submit'])) {
                                             ?>
 
                                             <div class="form-outline mb-4">
-                                                <input type="email" id="form2Example17" class="form-control form-control-lg" placeholder="Email" name="email" required/>
+                                                <input type="email" id="form2Example17" class="form-control form-control-lg" placeholder="Email" name="email" required />
                                                 <label class="form-label" for="form2Example17">Email address</label>
                                             </div>
 

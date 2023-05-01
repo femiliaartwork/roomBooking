@@ -91,32 +91,23 @@ if (isset($_POST['submit'])) {
                                         </div>
 
 
-
                                         <div class="form-outline mb-4">
-                                            <input type="text" id="form3Example8" class="form-control form-control-lg" placeholder="Address" name="address" required />
-                                            <label class="form-label" for="form3Example8">Address</label>
-                                        </div>
 
-                                        <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+                                            <select id="form3Example97" class="form-control form-control-lg" name="room" required>
+                                                <option selected>Choose Room To Book</option>
+                                                <?php
+                                                $sql = "SELECT * FROM room";
+                                                $result2 = mysqli_query($conn, $sql);
+                                                $resultCheck = mysqli_num_rows($result2);
 
-                                            <h6 class="mb-1 me-4">Account Type: </h6>
-
-                                            <div class="form-check form-check-inline mb-0 me-4" style="padding-left: 1rem;">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="adminUser" value="admin" required />
-                                                <label class="form-check-label" for="adminUser">Admin</label>
-                                            </div>
-
-                                            <div class="form-check form-check-inline mb-0 me-4">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="student" value="student" required />
-                                                <label class="form-check-label" for="student">Student</label>
-                                            </div>
-
-                                        </div>
-
-
-                                        <div class="form-outline mb-4">
-                                            <input type="text" id="form3Example97" class="form-control form-control-lg" placeholder="Email" name="email" required />
-                                            <label class="form-label" for="form3Example97">Email</label>
+                                                if ($resultCheck > 0) {
+                                                    while ($row = mysqli_fetch_assoc($result2)) {
+                                                        echo '<option value="' . $row['room_name'] . '">' . $row['room_name'] . '</option>';
+                                                    }
+                                                } else {
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
 
 
