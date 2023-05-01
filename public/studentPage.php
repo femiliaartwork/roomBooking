@@ -51,7 +51,7 @@ session_start();
                         <td>' . $row['booking_date'] . '</td>
                         <td>' . $row['room_id'] . '</td>
                         <td>
-                            <a href="" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
+                            <a href="./studentEdit.php?roomid='. $row['room_id'] .'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
                             <a href="" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
                         </td>
                     </tr>';
