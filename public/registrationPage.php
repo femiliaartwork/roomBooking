@@ -26,9 +26,7 @@
             $insert = "INSERT INTO user(firstName, lastName, userType, email, password, address) VALUES('$fName', '$lName', '$userType', '$email', '$password', '$address')";
             mysqli_query($conn, $insert);
 
-            $_SESSION['msgSuccess'] = 'User account sucessfully created!' ;
-
-            header('location:../index.php');
+            header('location:../index.php?msg=User Account Successfully Created');
 
         }
 
