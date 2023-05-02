@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
             <div class="container py-5 h-100 w-100" style="margin-top: 5rem">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col">
-                        <div class="card card-registration my-4 w-100" style="width:max-content; height:max-content; margin-left:25rem; ">
+                        <div class="card card-registration my-4 w-100" style="width:max-content; height:max-content; margin-left:15rem; ">
                             <div class="row g-0">
                                 <div class="col-xl-6 d-none d-xl-block">
                                     <img src="../assets/images/logo-shorthand-horizontal.png" alt="Sample photo" class="img-fluid" style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
