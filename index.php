@@ -112,7 +112,7 @@ if (isset($_POST['submit'])) {
                                                 <input class="btn btn-dark btn-lg btn-block" type="submit" value="Login" name="submit">
                                             </div>
 
-                                            <a class="small text-muted" href="#!">Forgot password?</a>
+                                            <a class="small text-muted" href="./public/forgetPassEmail.php">Forgot password?</a>
                                             <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="./public/registrationPage.php" style="color: #393f81;">Register here</a></p>
                                             <a href="#!" class="small text-muted">Terms of use.</a>
                                             <a href="#!" class="small text-muted">Privacy policy</a>
