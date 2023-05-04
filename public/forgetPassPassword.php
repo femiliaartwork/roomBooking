@@ -9,10 +9,6 @@ if (isset($_POST['submit'])) {
     $password = $_POST["password"];
     $password2 = $_POST["password2"];
 
-    if ($password != $password2) {
-        $error[] = 'Password Mismatch!';
-    }
-
     // SQL query
     $select = "SELECT * FROM user WHERE password='$password'";
 
@@ -20,11 +16,16 @@ if (isset($_POST['submit'])) {
 
     // var_dump($result);    
 
-    // SQL query to update the user password according to the email he/she entered in the forgetPassEmail.php using _SESSION['email']
-    $update = "UPDATE user SET password = '$password' WHERE email = '" . $_SESSION['email'] . "'";
-    mysqli_query($conn, $update);
+    // check whether the password for both is the same
+    if ($password != $password2) {
+        $error[] = 'Password Mismatch!';
+    } else {
+        // SQL query to update the user password according to the email he/she entered in the forgetPassEmail.php using _SESSION['email']
+        $update = "UPDATE user SET password = '$password' WHERE email = '" . $_SESSION['email'] . "'";
+        mysqli_query($conn, $update);
 
-    header('location:../index.php?passchange=Password Successfully change!');
+        header('location:../index.php?passchange=Password Successfully change!');
+    }
 }
 ?>
 
