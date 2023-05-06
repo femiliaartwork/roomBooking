@@ -26,6 +26,18 @@ session_start();
     <div style="padding-left:1rem;">
         <a href="./studentBooking.php" class="btn btn-dark mb-3">Book a room</a>
     </div>
+
+    <div>
+        <?php
+        if (isset($_GET['update'])) {
+            $update = $_GET['update'];
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">' . $update .
+                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                          </div>';
+        }
+        ?>
+    </div>
+
     <div class="container">
 
         <table class="table table-hover text-center">
@@ -41,7 +53,7 @@ session_start();
                 <?php
                 $sql = "SELECT * from booking where user_id = '" . $_SESSION['student_id'] . "'";
                 $result = mysqli_query($conn, $sql);
-            
+
 
                 // check if there are any result that came back
                 $resultCheck = mysqli_num_rows($result);
@@ -53,12 +65,11 @@ session_start();
                         <td>' . $row['booking_date'] . '</td>
                         <td>' . $row['room_id'] . '</td>
                         <td>
-                            <a href="./studentEdit.php?roomid='. $row['room_id'] .'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
+                            <a href="./studentEdit.php?roomid=' . $row['room_id'] . '&bookingid=' . $row['booking_id'] . '" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
                             <a href="" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
                         </td>
                     </tr>';
                     }
-                   
                 } else {
                     echo "No results found";
                 }

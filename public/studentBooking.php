@@ -9,7 +9,7 @@ if (isset($_POST['submit'])) {
     $roomName = mysqli_real_escape_string($conn, $_POST['room']);
     $date = mysqli_real_escape_string($conn, $_POST['date']);
     $time = mysqli_real_escape_string($conn, $_POST['time']);
-   
+
 
     // SQL query if the room is chosen but its not available then cannot book
     $select = "SELECT * FROM room WHERE room_name ='$roomName' && availability = 1";
@@ -53,13 +53,13 @@ if (isset($_POST['submit'])) {
 <body>
     <form action="" method="post">
         <section class="h-100 bg-white">
-            <div class="container py-5 h-100 w-100" style="margin-top: 5rem" >
+            <div class="container py-5 h-100 w-100" style="margin-top: 5rem">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col">
-                        <div class="card card-registration my-4 w-100" style="width:max-content; height:max-content; margin-left:25rem; ">
+                        <div class="card card-registration my-4 " style="height:max-content; ">
                             <div class="row g-0">
-                                <div class="col-xl-6 d-none d-xl-block">
-                                    <img src="../assets/images/logo-shorthand-horizontal.png" alt="Sample photo" class="img-fluid" style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                                <div class="col-md-6 col-lg-4 d-none d-md-block">
+                                    <img src="../assets/images/logo-shorthand-horizontal.png" alt="" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
                                 </div>
                                 <div class="col-xl-6 ">
                                     <div class="card-body p-md-5 text-black">
@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
                                             }
                                         }
                                         ?>
-                                       
+
 
 
                                         <div class="form-outline mb-4">

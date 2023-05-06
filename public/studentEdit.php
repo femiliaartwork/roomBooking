@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
 
 
     // SQL query to update the new date and time 
-    $update = "UPDATE booking SET booking_date = '$date', booking_time = '$time' WHERE room_id = '" . $_GET['roomid'] . "'";
+    $update = "UPDATE booking SET booking_date = '$date', booking_time = '$time' WHERE room_id = '" . $_GET['roomid'] . "' AND booking_id = '" . $_GET['bookingid'] . "'";
 
     $result = mysqli_query($conn, $update);
 
