@@ -34,6 +34,11 @@ session_start();
             echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">' . $update .
                 '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                           </div>';
+        } else if (isset($_GET['delete'])) {
+            $delete = $_GET['delete'];
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">' . $delete .
+                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                          </div>';
         }
         ?>
     </div>
@@ -66,7 +71,7 @@ session_start();
                         <td>' . $row['room_id'] . '</td>
                         <td>
                             <a href="./studentEdit.php?roomid=' . $row['room_id'] . '&bookingid=' . $row['booking_id'] . '" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
-                            <a href="" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
+                            <a href="./studentDelete.php?bookingid=' . $row['booking_id'] . '" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
                         </td>
                     </tr>';
                     }
