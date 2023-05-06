@@ -41,6 +41,8 @@ session_start();
                 <?php
                 $sql = "SELECT * from booking where user_id = '" . $_SESSION['student_id'] . "'";
                 $result = mysqli_query($conn, $sql);
+            
+
                 // check if there are any result that came back
                 $resultCheck = mysqli_num_rows($result);
 
@@ -56,6 +58,7 @@ session_start();
                         </td>
                     </tr>';
                     }
+                   
                 } else {
                     echo "No results found";
                 }

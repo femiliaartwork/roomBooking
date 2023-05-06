@@ -7,26 +7,20 @@ session_start();
 
 if (isset($_POST['submit'])) {
 
-    $roomName = mysqli_real_escape_string($conn, $_POST['room']);
+    // get the keyed in date and time after the form is submitted
+
     $date = mysqli_real_escape_string($conn, $_POST['date']);
     $time = mysqli_real_escape_string($conn, $_POST['time']);
 
 
-    // SQL query if the room is chosen but its not available then cannot book
-    $select = "SELECT * FROM room WHERE room_name ='$roomName' && availability = 1";
+    // SQL query to update the new date and time 
+    $update = "UPDATE booking SET booking_date = '$date', booking_time = '$time' WHERE room_id = '" . $_GET['roomid'] . "'";
 
-    $result = mysqli_query($conn, $select);
+    $result = mysqli_query($conn, $update);
 
     // print_r($result);
 
-    if (mysqli_num_rows($result) == 0) {
-        $error[] = 'Room is not available for booking';
-    } else {
-        $_SESSION['room_name'] = $roomName;
-        $_SESSION['date'] = $date;
-        $_SESSION['time'] = $time;
-        header('location:./payment.php?msg=booking in progress');
-    }
+    header('location:./studentPage.php?update=Booking update successfully!');
 }
 ?>
 
