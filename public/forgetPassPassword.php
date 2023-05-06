@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
         $update = "UPDATE user SET password = '$password' WHERE email = '" . $_SESSION['email'] . "'";
         mysqli_query($conn, $update);
 
-        header('location:../index.php?passchange=Password Successfully change!');
+        header('location:../index.php?passchange=Password changed successfully!');
     }
 }
 ?>
