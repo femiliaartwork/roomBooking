@@ -21,6 +21,9 @@ session_start();
 </head>
 
 <body>
+    <?php
+    include('./header.php');
+    ?>
     <h1 style="padding-left:1rem;">Welcome <span class="link-primary"><?php echo $_SESSION['student_name'] ?></span></h1>
 
     <div style="padding-left:1rem;">
