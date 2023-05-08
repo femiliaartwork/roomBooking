@@ -1,4 +1,6 @@
 <?php
+include_once '../db_connection.php';
+
 session_start();
 
 ?>
@@ -15,35 +17,54 @@ session_start();
     <link rel="stylesheet" href="../css/styles.css" />
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <title>Payment Page</title>
+    <title>Admin Page</title>
 </head>
 
 <body>
     <h1 style="padding-left:1rem;">Welcome <span class="link-primary"><?php echo $_SESSION['admin_name'] ?></span></h1>
 
+    <div style="padding-left:1rem;">
+        <a href="./adminCreate.php" class="btn btn-dark mb-3">Create a room</a>
+    </div>
     <div class="container">
         <table class="table table-hover text-center">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col">User Id</th>
                     <th scope="col">Room Name</th>
                     <th scope="col">Room Id</th>
+                    <th scope="col">Room Capacity</th>
                     <th scope="col">Availability</th>
+                    <th scope="col">Price</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
+            <?php
+                $sql = "SELECT * from room where user_id = '" . $_SESSION['admin_id'] . "'";
+                $result = mysqli_query($conn, $sql);           
 
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>
-                        <a href="" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
-                        <a href="" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
-                    </td>
-                </tr>
+                // check if there are any result that came back
+                $resultCheck = mysqli_num_rows($result);
+
+                if ($resultCheck > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '<tr>
+                        <th scope="row">' . $row['room_name'] . '</th>
+                        <td>' . $row['room_id'] . '</td>
+                        <td>' . $row['room_capacity'] . '</td>
+                        <td>' . $row['availability'] .'</td>
+                        <td>' . $row['price'] .'</td>
+                        <td>
+                            <a href="./adminEdit.php?roomid='. $row['room_id'] .'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
+                            <a href="" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
+                        </td>
+                    </tr>';
+                    }
+                   
+                } else {
+                    echo "No results found";
+                }
+                ?>
 
             </tbody>
         </table>
