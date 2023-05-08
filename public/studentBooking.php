@@ -51,6 +51,9 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
+    <?php
+    include('./header.php');
+    ?>
     <form action="" method="post">
         <section class="h-100 bg-white">
             <div class="container py-5 h-100 w-100" style="margin-top: 5rem">

@@ -46,6 +46,9 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
+    <?php
+    include('./header.php');
+    ?>
     <form action="" method="post">
         <section class="h-100 bg-white">
             <div class="container py-5 h-100 w-100" style="margin-top: 5rem">
@@ -65,9 +68,9 @@ if (isset($_POST['submit'])) {
                                             <?php
                                             $sql = "SELECT * from room where room_id = '" . $_GET['roomid'] . "'";
                                             $result2 = mysqli_query($conn, $sql);
-                                            $row = mysqli_fetch_assoc($result2);    
+                                            $row = mysqli_fetch_assoc($result2);
                                             ?>
-                                            <input type="text" id="room" class="form-control form-control-lg" name="room" value="<?php echo $row['room_name']?>" readonly>
+                                            <input type="text" id="room" class="form-control form-control-lg" name="room" value="<?php echo $row['room_name'] ?>" readonly>
                                             <label class="form-label" for="room">Room Name</label>
                                         </div>
 
