@@ -7,7 +7,7 @@ session_start();
 
 if (isset($_POST['submit'])) {
 
-    // get the keyed in date and time after the form is submitted
+    // get the keyed in date, time and the end date after the form is submitted
 
     $date = mysqli_real_escape_string($conn, $_POST['date']);
     $endDate = mysqli_real_escape_string($conn, $_POST['end_date']);
