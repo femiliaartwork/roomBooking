@@ -8,6 +8,7 @@ if (isset($_POST['submit'])) {
 
     $roomName = mysqli_real_escape_string($conn, $_POST['room']);
     $date = mysqli_real_escape_string($conn, $_POST['date']);
+    $edate = mysqli_real_escape_string($conn, $_POST['end_date']);
     $time = mysqli_real_escape_string($conn, $_POST['time']);
 
 
@@ -23,6 +24,7 @@ if (isset($_POST['submit'])) {
     } else {
         $_SESSION['room_name'] = $roomName;
         $_SESSION['date'] = $date;
+        $_SESSION['edate'] = $edate;
         $_SESSION['time'] = $time;
         header('location:./payment.php?msg=booking in progress');
     }
@@ -101,6 +103,11 @@ if (isset($_POST['submit'])) {
                                         <div class="form-outline mb-4">
                                             <input type="date" id="datepicker" class="form-control form-control-lg" name="date" required>
                                             <label class="form-label" for="datepicker">Booking date</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            <input type="date" id="datepicker2" class="form-control form-control-lg" name="end_date" required>
+                                            <label class="form-label" for="datepicker2">Booking end date</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
