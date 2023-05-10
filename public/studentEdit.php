@@ -7,14 +7,15 @@ session_start();
 
 if (isset($_POST['submit'])) {
 
-    // get the keyed in date and time after the form is submitted
+    // get the keyed in date, time and the end date after the form is submitted
 
     $date = mysqli_real_escape_string($conn, $_POST['date']);
+    $endDate = mysqli_real_escape_string($conn, $_POST['end_date']);
     $time = mysqli_real_escape_string($conn, $_POST['time']);
 
 
     // SQL query to update the new date and time 
-    $update = "UPDATE booking SET booking_date = '$date', booking_time = '$time' WHERE room_id = '" . $_GET['roomid'] . "' AND booking_id = '" . $_GET['bookingid'] . "'";
+    $update = "UPDATE booking SET booking_date = '$date', booking_time = '$time', booking_edate = '$endDate' WHERE room_id = '" . $_GET['roomid'] . "' AND booking_id = '" . $_GET['bookingid'] . "'";
 
     $result = mysqli_query($conn, $update);
 
@@ -46,6 +47,9 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
+    <?php
+    include('./header.php');
+    ?>
     <form action="" method="post">
         <section class="h-100 bg-white">
             <div class="container py-5 h-100 w-100" style="margin-top: 5rem">
@@ -65,9 +69,9 @@ if (isset($_POST['submit'])) {
                                             <?php
                                             $sql = "SELECT * from room where room_id = '" . $_GET['roomid'] . "'";
                                             $result2 = mysqli_query($conn, $sql);
-                                            $row = mysqli_fetch_assoc($result2);    
+                                            $row = mysqli_fetch_assoc($result2);
                                             ?>
-                                            <input type="text" id="room" class="form-control form-control-lg" name="room" value="<?php echo $row['room_name']?>" readonly>
+                                            <input type="text" id="room" class="form-control form-control-lg" name="room" value="<?php echo $row['room_name'] ?>" readonly>
                                             <label class="form-label" for="room">Room Name</label>
                                         </div>
 
@@ -75,6 +79,11 @@ if (isset($_POST['submit'])) {
                                         <div class="form-outline mb-4">
                                             <input type="date" id="datepicker" class="form-control form-control-lg" name="date" required>
                                             <label class="form-label" for="datepicker">Booking date</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            <input type="date" id="datepicker2" class="form-control form-control-lg" name="end_date" required>
+                                            <label class="form-label" for="datepicker2">Booking end date</label>
                                         </div>
 
                                         <div class="form-outline mb-4">

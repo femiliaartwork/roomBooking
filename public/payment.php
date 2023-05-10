@@ -49,6 +49,9 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
+    <?php
+    include('./header.php');
+    ?>
     <section class="p-4 p-md-5" style="
     background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/background3.webp);
   ">
@@ -97,12 +100,12 @@ if (isset($_POST['submit'])) {
                             </div>
 
                             <div class="form-outline mb-4">
-                                <input type="text" id="formControlLgXsds" class="form-control form-control-lg" value="Booking Fee: $10.00" readonly/>
+                                <input type="text" id="formControlLgXsds" class="form-control form-control-lg" value="Booking Fee: $10.00" readonly />
                                 <label class="form-label" for="formControlLgXsds">Booking Cost</label>
                             </div>
 
-                            <input type="submit" class="btn btn-success btn-lg btn-block" name="submit" value="Pay"/>
-                            
+                            <input type="submit" class="btn btn-success btn-lg btn-block" name="submit" value="Pay" />
+
                         </form>
                     </div>
                 </div>
