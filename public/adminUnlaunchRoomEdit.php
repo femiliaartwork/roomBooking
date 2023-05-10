@@ -11,20 +11,17 @@ if (isset($_POST['submit'])) {
 
     $roomName = mysqli_real_escape_string($conn, $_POST['room_name']);
     $roomCapacity = mysqli_real_escape_string($conn, $_POST['room_capacity']);
-    $date = mysqli_real_escape_string($conn, $_POST['booking_date']);
-    $time = mysqli_real_escape_string($conn, $_POST['time']);
     $price = mysqli_real_escape_string($conn, $_POST['price']);
     $promotionCode = mysqli_real_escape_string($conn, $_POST['promotion_code']);
 
 
-    // SQL query to update the new date and time 
-    $update = "UPDATE room SET name = '$roomName', room_capacity = '$roomCapacity', price = '$price', promo_code = '$promotionCode', WHERE room_id = '" . $_GET['roomid'] . "'";
-    $update = "UPDATE booking SET booking_date = '$date', booking_time = '$time' WHERE room_id = '" . $_GET['roomid'] . "' AND booking_id = '" . $_GET['bookingid'] . "'";
+    // SQL query to update the new room details  
+    $update = "UPDATE createroom SET room_name = '$roomName', room_capacity = '$roomCapacity', price = '$price', promotion_code = '$promotionCode' WHERE room_id = '" . $_GET['roomid'] ."'";
     $result = mysqli_query($conn, $update);
 
     // print_r($result);
 
-    header('location:./adminPage.php?update=Booking update successfully!');
+    header('location:./adminPage.php?update=Room update successfully!');
 }
 ?>
 
@@ -50,6 +47,9 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
+    <?php
+    include('./header.php');
+    ?>
     <form action="" method="post">
         <section class="h-100 bg-white">
             <div class="container py-5 h-100 w-100" style="margin-top: 5rem">
@@ -62,32 +62,22 @@ if (isset($_POST['submit'])) {
                                 </div>
                                 <div class="col-xl-6 ">
                                     <div class="card-body p-md-5 text-black">
-                                        <h3 class="mb-5 text-uppercase">Edit Room Details</h3>
+                                        <h3 class="mb-5 text-uppercase">Edit Unlaunched Room Details</h3>
 
 
                                         <div class="form-outline mb-4">
                                             <?php
-                                            $sql = "SELECT * from room where room_id = '" . $_GET['roomid'] . "'";
+                                            $sql = "SELECT * from createroom where room_id = '" . $_GET['roomid'] . "'";
                                             $result2 = mysqli_query($conn, $sql);
                                             $row = mysqli_fetch_assoc($result2);    
                                             ?>
-                                            <input type="text" id="room" class="form-control form-control-lg" name="room" value="<?php echo $row['room_name']?>" readonly>
-                                            <label class="form-label" for="room">Room Name</label>
-                                        </div>
-
-
-                                        <div class="form-outline mb-4">
-                                            <input type="date" id="datepicker" class="form-control form-control-lg" name="booking_date" required>
-                                            <label class="form-label" for="datepicker">Booking date</label>
+                                            <input type="text" id="room_name" class="form-control form-control-lg" name="room_name" value="<?php echo $row['room_name']?>" readonly>
+                                            <label class="form-label" for="room_name">Room Name</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="time" id="timepicker" class="form-control form-control-lg" name="booking_time" required>
-                                            <label class="form-label" for="timepicker">Booking time</label>
-                                        </div>
-                                        <div class="form-outline mb-4">
 
-                                            <input type="number" id="capacity" class="form-control form-control-lg" name="capacity" min="1" max="100" value="<?php echo $row['room_capacity']?>"required>
+                                            <input type="number" id="capacity" class="form-control form-control-lg" name="room_capacity" min="1" max="100" value="<?php echo $row['room_capacity']?>"required>
                                             <label class="form-label" for="capacity">Capacity</label>
                                         </div>
 
@@ -97,7 +87,7 @@ if (isset($_POST['submit'])) {
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="text" id="promocode" class="form-control form-control-lg" name="promocode" >
+                                            <input type="text" id="promocode" class="form-control form-control-lg" name="promotion_code" value="<?php echo $row['promotion_code']?>">
                                             <label class="form-label" for="promocode">Promotion Code</label>
                                         </div>
 
