@@ -54,6 +54,7 @@ session_start();
                     <th scope="col">Booking Id</th>
                     <th scope="col">Booking Date</th>
                     <th scope="col">Booking End Date</th>
+                    <th scope = "cold">Booking time</th>
                     <th scope="col">Room Id</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -73,6 +74,7 @@ session_start();
                         <th scope="row">' . $row['booking_id'] . '</th>
                         <td>' . $row['booking_date'] . '</td>
                         <td>' . $row['booking_edate'] . '</td>
+                        <td>' . $row['booking_time'] . '</td>
                         <td>' . $row['room_id'] . '</td>
                         <td>
                             <a href="./studentEdit.php?roomid=' . $row['room_id'] . '&bookingid=' . $row['booking_id'] . '" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
