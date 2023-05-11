@@ -7,17 +7,18 @@ session_start();
 if (isset($_POST['submit'])) {
 
     $roomName = mysqli_real_escape_string($conn, $_POST['room_name']);
-    $date = mysqli_real_escape_string($conn, $_POST['date']);
-    $time = mysqli_real_escape_string($conn, $_POST['time']);
-    $capacity = mysqli_real_escape_string($conn, $_POST['capacity']);
+    $roomCapacity = mysqli_real_escape_string($conn, $_POST['room_capacity']);
     $price = mysqli_real_escape_string($conn, $_POST['price']);
     $promotionCode = mysqli_real_escape_string($conn, $_POST['promotion_code']);
 
     // insert a new record into the "room" table
-    $select = "SELECT * FROM room";
-    $result = mysqli_query($conn, $select);
-
-    echo 'Room created successfully.';
+    $insert = "INSERT INTO createRoom SET room_name = '$roomName', room_capacity = '$roomCapacity', price = '$price', promotion_code = '$promotionCode' , user_id = '" . $_SESSION['admin_id'] . "'";
+    $result = mysqli_query($conn, $insert);
+    //$_SESSION['room_name'] = $roomName;
+    //$_SESSION['room_capacity'] = $roomCapacity;
+    //$_SESSION['price'] = $price;
+    //$_SESSION['promotion_code'] = $promotionCode;
+    header('location:./adminPage.php?msg=Room created successfully.');
 }
 ?>
 
@@ -43,6 +44,9 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
+    <?php
+    include('./header.php');
+    ?>
     <form action="" method="post">
         <section class="h-100 bg-white">
             <div class="container py-5 h-100 w-100" style="margin-top: 5rem" >
@@ -65,25 +69,19 @@ if (isset($_POST['submit'])) {
                                         }
                                         ?>
 
-                                    <label for="name">Name:</label>
-                                    <input type="text" name="name" id="name">
+                                    <label for="name">Room Name:</label>
+                                    <input type="text" name="room_name" id="room_name">
                                     <br>
                                     <label for="price">Price:</label>
                                     <input type="text" name="price" id="price">
                                     <br>
                                     <label for="capacity">Capacity:</label>
-                                    <input type="number" name="capacity" id="capacity">
-                                    <br>
-                                    <label for="date">Date:</label>
-                                    <input type="date" name="date" id="date">
-                                    <br>
-                                    <label for="time">Time:</label>
-                                    <input type="time" name="time" id="time">
+                                    <input type="number" name="room_capacity" id="room_capacity">
                                     <br>
                                     <label for="promo_code">Promotion code:</label>
-                                    <input type="text" name="promo_code" id="promo_code">
+                                    <input type="text" name="promotion_code" id="promotion_code">
                                     <br>
-                                    <input type="submit" value="Create room">
+                                    <input type="submit" value="Create room" name="submit">
 
                                     </div>
                                 </div>
