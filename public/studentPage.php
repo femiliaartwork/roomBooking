@@ -42,6 +42,11 @@ session_start();
             echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">' . $delete .
                 '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                           </div>';
+        } else if (isset($_GET['payment'])) {
+            $payment = $_GET['payment'];
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">' . $payment .
+                '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                          </div>';
         }
         ?>
     </div>
@@ -54,7 +59,7 @@ session_start();
                     <th scope="col">Booking Id</th>
                     <th scope="col">Booking Date</th>
                     <th scope="col">Booking End Date</th>
-                    <th scope = "cold">Booking time</th>
+                    <th scope="cold">Booking time</th>
                     <th scope="col">Room Id</th>
                     <th scope="col">Actions</th>
                 </tr>

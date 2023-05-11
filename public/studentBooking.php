@@ -17,11 +17,14 @@ if (isset($_POST['submit'])) {
 
     $result = mysqli_query($conn, $select);
 
+    $row = mysqli_fetch_assoc($result);
+
     // print_r($result);
 
     if (mysqli_num_rows($result) == 0) {
         $error[] = 'Room is not available for booking';
     } else {
+        $_SESSION['room_id'] = $row['room_id'];
         $_SESSION['room_name'] = $roomName;
         $_SESSION['date'] = $date;
         $_SESSION['edate'] = $edate;

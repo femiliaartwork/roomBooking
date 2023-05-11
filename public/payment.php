@@ -6,26 +6,18 @@ session_start();
 
 if (isset($_POST['submit'])) {
 
-    $roomName = mysqli_real_escape_string($conn, $_POST['room']);
-    $date = mysqli_real_escape_string($conn, $_POST['date']);
-    $time = mysqli_real_escape_string($conn, $_POST['time']);
-
+    // $roomName = mysqli_real_escape_string($conn, $_POST['room']);
+    // $date = mysqli_real_escape_string($conn, $_POST['date']);
+    // $time = mysqli_real_escape_string($conn, $_POST['time']);
 
     // SQL query if the room is chosen but its not available then cannot book
-    $insert = "SELECT * FROM room WHERE room_name ='$roomName' && availability = 1";
+
+    // '" . $_GET['roomid'] . "' AND booking_id = '" . $_GET['bookingid'] . "'";
+    $insert = "INSERT INTO booking(booking_date, booking_time, booking_edate, room_id, user_id) VALUES ('" . $_SESSION['date'] ."', '" . $_SESSION['time'] ."', '" . $_SESSION['edate'] ."', " . $_SESSION['room_id'] .", " . $_SESSION['student_id'] .") ";
 
     $result = mysqli_query($conn, $insert);
 
-    // print_r($result);
-
-    if (mysqli_num_rows($result) == 0) {
-        $error[] = 'Room is not available for booking';
-    } else {
-        $_SESSION['room_name'] = $roomName;
-        $_SESSION['date'] = $date;
-        $_SESSION['time'] = $time;
-        header('location:./payment.php?msg=booking in progress');
-    }
+    header('location:./studentPage.php?payment=Room Successfully Booked');
 }
 ?>
 <!DOCTYPE html>
@@ -74,14 +66,14 @@ if (isset($_POST['submit'])) {
                             <p class="fw-bold mb-4">Add card:</p>
 
                             <div class="form-outline mb-4">
-                                <input type="text" id="formControlLgXsd" class="form-control form-control-lg" value="Anna Doe" />
+                                <input type="text" id="formControlLgXsd" class="form-control form-control-lg" value="" placeholder="nameofyourgirlfriend:)" />
                                 <label class="form-label" for="formControlLgXsd">Cardholder's Name</label>
                             </div>
 
                             <div class="row mb-4">
                                 <div class="col-7">
                                     <div class="form-outline">
-                                        <input type="text" id="formControlLgXM" class="form-control form-control-lg" value="1234 5678 1234 5678" />
+                                        <input type="text" id="formControlLgXM" class="form-control form-control-lg" value="" placeholder="1234123412341234" />
                                         <label class="form-label" for="formControlLgXM">Card Number</label>
                                     </div>
                                 </div>
@@ -100,7 +92,12 @@ if (isset($_POST['submit'])) {
                             </div>
 
                             <div class="form-outline mb-4">
-                                <input type="text" id="formControlLgXsds" class="form-control form-control-lg" value="Booking Fee: $10.00" readonly />
+                                <?php
+                                $sql = "SELECT * from room where room_name = '" . $_SESSION['room_name'] . "'";
+                                $result2 = mysqli_query($conn, $sql);
+                                $row = mysqli_fetch_assoc($result2);
+                                ?>
+                                <input type="text" id="formControlLgXsds" class="form-control form-control-lg" value="$<?php echo $row['price'] ?>" readonly />
                                 <label class="form-label" for="formControlLgXsds">Booking Cost</label>
                             </div>
 
