@@ -75,11 +75,42 @@ if (isset($_POST['submit'])) {
                                             <label class="form-label" for="room">Room Name</label>
                                         </div>
 
+                                        <div class="form-outline mb-4">
+                                            <?php
+                                            $sql2 = "SELECT * from booking where booking_id = '" . $_GET['bookingid'] . "'";
+                                            $result3 = mysqli_query($conn, $sql2);
+                                            $row2 = mysqli_fetch_assoc($result3);
+                                            ?>
+                                            <input type="text" id="current_booking_date" class="form-control form-control-lg" name="cdate" value="<?php echo $row2['booking_date'] ?>" readonly>
+                                            <label class="form-label" for="current_booking_date">Current Booking Date</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            <?php
+                                            $sql3 = "SELECT * from booking where booking_id = '" . $_GET['bookingid'] . "'";
+                                            $result4 = mysqli_query($conn, $sql3);
+                                            $row3 = mysqli_fetch_assoc($result4);
+                                            ?>
+                                            <input type="text" id="current_booking_edate" class="form-control form-control-lg" name="cedate" value="<?php echo $row3['booking_edate'] ?>" readonly>
+                                            <label class="form-label" for="current_booking_edate">Current Booking End Date</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            <?php
+                                            $sql4 = "SELECT * from booking where booking_id = '" . $_GET['bookingid'] . "'";
+                                            $result5 = mysqli_query($conn, $sql4);
+                                            $row4 = mysqli_fetch_assoc($result5);
+                                            ?>
+                                            <input type="text" id="current_booking_time" class="form-control form-control-lg" name="ctime" value="<?php echo $row4['booking_time'] ?>" readonly>
+                                            <label class="form-label" for="current_booking_time">Current Booking Time</label>
+                                        </div>
+
 
                                         <div class="form-outline mb-4">
                                             <input type="date" id="datepicker" class="form-control form-control-lg" name="date" required>
                                             <label class="form-label" for="datepicker">Booking date</label>
                                         </div>
+
 
                                         <div class="form-outline mb-4">
                                             <input type="date" id="datepicker2" class="form-control form-control-lg" name="end_date" required>
