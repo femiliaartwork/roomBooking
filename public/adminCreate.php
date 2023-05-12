@@ -12,12 +12,9 @@ if (isset($_POST['submit'])) {
     $promotionCode = mysqli_real_escape_string($conn, $_POST['promotion_code']);
 
     // insert a new record into the "room" table
-    $insert = "INSERT INTO createRoom SET room_name = '$roomName', room_capacity = '$roomCapacity', price = '$price', promotion_code = '$promotionCode' , user_id = '" . $_SESSION['admin_id'] . "'";
+    $insert = "INSERT INTO room SET launch_room = 0 , room_name = '$roomName', room_capacity = '$roomCapacity', price = '$price', promotion_code = '$promotionCode' , user_id = '" . $_SESSION['admin_id'] . "'";
     $result = mysqli_query($conn, $insert);
-    //$_SESSION['room_name'] = $roomName;
-    //$_SESSION['room_capacity'] = $roomCapacity;
-    //$_SESSION['price'] = $price;
-    //$_SESSION['promotion_code'] = $promotionCode;
+
     header('location:./adminPage.php?msg=Room created successfully.');
 }
 ?>

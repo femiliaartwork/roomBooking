@@ -82,7 +82,7 @@ session_start();
             </tbody>
         </table>
     </div>
-    <h4 style="padding-left:1rem;">Edit launched room details</h4>
+    <h4 style="padding-left:1rem;">Edit room details</h4>
     <div class="container">
         <table class="table table-hover text-center">
             <thead class="table-dark">
@@ -105,6 +105,7 @@ session_start();
 
                 if ($resultCheck > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
+                        if($row['launch_room'] == 1){
                         echo '<tr>
                         <th scope="row">' . $row['room_name'] . '</th>
                         <td>' . $row['room_id'] . '</td>
@@ -116,50 +117,19 @@ session_start();
                             <a href="./adminRoomDelete.php?roomid=' . $row['room_id'] . '" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
                         </td>
                     </tr>';
-                    }
-                   
-                } else {
-                    echo "No results found";
-                }
-                ?>
-
-            </tbody>
-        </table>
-    </div>
-    <h4 style="padding-left:1rem;">Edit unlaunched room details</h4>
-    <div class="container">
-        <table class="table table-hover text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Room Name</th>
-                    <th scope="col">Room Id</th>
-                    <th scope="col">Room Capacity</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Promotion code</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php
-                $sql = "SELECT * from createroom  WHERE createroom.room_id != 0 ";
-                $result = mysqli_query($conn, $sql);           
-
-                // check if there are any result that came back
-                $resultCheck = mysqli_num_rows($result);
-
-                if ($resultCheck > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo '<tr>
-                        <th scope="row">' . $row['room_name'] . '</th>
-                        <td>' . $row['room_id'] . '</td>
-                        <td>' . $row['room_capacity'] . '</td>
-                        <td>' . $row['price'] .'</td>
-                        <td>' . $row['promotion_code'] .'</td>
-                        <td>
-                            <a href="./adminUnlaunchRoomEdit.php?roomid='. $row['room_id'] .'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
-                            <a href="./adminLaunch.php?roomid=' . $row['room_id'] . '" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Launch</i></a>
-                        </td>
-                    </tr>';
+                        }
+                        else { echo '<tr>
+                            <th scope="row">' . $row['room_name'] . '</th>
+                            <td>' . $row['room_id'] . '</td>
+                            <td>' . $row['room_capacity'] . '</td>
+                            <td>' . $row['price'] .'</td>
+                            <td>' . $row['promotion_code'] .'</td>
+                            <td>
+                                <a href="./adminRoomEdit.php?roomid='. $row['room_id'] .'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
+                                <a href="./adminRoomDelete.php?roomid=' . $row['room_id'] . '" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
+                                <a href="./adminLaunch.php?roomid=' . $row['room_id'] . '" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Launch</i></a>
+                            </td>
+                        </tr>';}
                     }
                    
                 } else {
