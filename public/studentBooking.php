@@ -29,7 +29,12 @@ if (isset($_POST['submit'])) {
 
     if (mysqli_num_rows($result) == 0) {
         $error[] = 'Room is not available for booking';
-    } else {
+        
+    } else if(mysqli_num_rows($promoResult) == 0) {
+        $error[] = 'The promotion code does not exist!';
+    }
+    
+    else {
         $_SESSION['room_id'] = $row['room_id'];
         $_SESSION['room_name'] = $roomName;
         $_SESSION['date'] = $date;
