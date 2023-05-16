@@ -31,57 +31,6 @@ session_start();
         <a href="./adminCreate.php?user_id=' . $_SESSION['admin_id'] . '" class="btn btn-dark mb-3">Create a room</a> 
     </div>';
     ?>
-
-    <h4 style="padding-left:1rem;">Edit booking details</h4>
-    <div class="container">
-        <table class="table table-hover text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Room Name</th>
-                    <th scope="col">Room Id</th>
-                    <th scope="col">Booking Id</th>
-                    <th scope="col">Room Capacity</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Availability</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php
-                $sql = "SELECT * from room , booking WHERE room.room_id = booking.room_id";
-                $result = mysqli_query($conn, $sql);           
-
-                // check if there are any result that came back
-                $resultCheck = mysqli_num_rows($result);
-
-                if ($resultCheck > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo '<tr>
-                        <th scope="row">' . $row['room_name'] . '</th>
-                        <td>' . $row['room_id'] . '</td>
-                        <td>' . $row['booking_id'] . '</td>
-                        <td>' . $row['room_capacity'] . '</td>
-                        <td>' . $row['booking_date'] . '</td>
-                        <td>' . $row['booking_time'] . '</td>
-                        <td>' . $row['availability'] .'</td>
-                        <td>' . $row['price'] .'</td>
-                        <td>
-                            <a href="./adminBookingEdit.php?roomid=' . $row['room_id'] . '&bookingid=' . $row['booking_id'] . '" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
-                            <a href="./adminBookingDelete.php?bookingid=' . $row['booking_id'] . '" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
-                        </td>
-                    </tr>';
-                    }
-                   
-                } else {
-                    echo "No results found";
-                }
-                ?>
-
-            </tbody>
-        </table>
-    </div>
     <h4 style="padding-left:1rem;">Edit room details</h4>
     <div class="container">
         <table class="table table-hover text-center">
@@ -91,7 +40,7 @@ session_start();
                     <th scope="col">Room Id</th>
                     <th scope="col">Room Capacity</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Promotion code</th>
+                    <th scope="col">Blocked Dates</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -110,8 +59,8 @@ session_start();
                         <th scope="row">' . $row['room_name'] . '</th>
                         <td>' . $row['room_id'] . '</td>
                         <td>' . $row['room_capacity'] . '</td>
-                        <td>' . $row['price'] .'</td>
-                        <td>' . $row['promotion_code'] .'</td>
+                        <td>$' . $row['price'] .'</td>
+                        <td>' . $row['select_date'] .'</td>
                         <td>
                             <a href="./adminRoomEdit.php?roomid='. $row['room_id'] .'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
                             <a href="./adminRoomDelete.php?roomid=' . $row['room_id'] . '" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
@@ -122,8 +71,8 @@ session_start();
                             <th scope="row">' . $row['room_name'] . '</th>
                             <td>' . $row['room_id'] . '</td>
                             <td>' . $row['room_capacity'] . '</td>
-                            <td>' . $row['price'] .'</td>
-                            <td>' . $row['promotion_code'] .'</td>
+                            <td>$' . $row['price'] .'</td>
+                            <td>' . $row['select_date'] .'</td>
                             <td>
                                 <a href="./adminRoomEdit.php?roomid='. $row['room_id'] .'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
                                 <a href="./adminRoomDelete.php?roomid=' . $row['room_id'] . '" class="link-danger"><i class="fa-solid fa-pen-to-square fs-5 me-3">Delete</i></a>
