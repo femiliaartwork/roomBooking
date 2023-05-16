@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="text" id="promo" class="form-control form-control-lg" name="promocode" required>
+                                            <input type="text" id="promo" class="form-control form-control-lg" name="promocode">
                                             <label class="form-label" for="promo">Promo Code</label>
                                         </div>
 
