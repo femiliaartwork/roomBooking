@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     // SQL query if the room is chosen but its not available then cannot book
 
     // '" . $_GET['roomid'] . "' AND booking_id = '" . $_GET['bookingid'] . "'";
-    $insert = "INSERT INTO booking(booking_date, booking_time, booking_edate, room_id, user_id) VALUES ('" . $_SESSION['date'] ."', '" . $_SESSION['time'] ."', '" . $_SESSION['edate'] ."', " . $_SESSION['room_id'] .", " . $_SESSION['student_id'] .") ";
+    $insert = "INSERT INTO booking(booking_date, booking_time, booking_etime, room_id, user_id) VALUES ('" . $_SESSION['date'] ."', '" . $_SESSION['time'] ."', '" . $_SESSION['etime'] ."', " . $_SESSION['room_id'] .", " . $_SESSION['student_id'] .") ";
 
     $result = mysqli_query($conn, $insert);
 
@@ -96,8 +96,9 @@ if (isset($_POST['submit'])) {
                                 $sql = "SELECT * from room where room_name = '" . $_SESSION['room_name'] . "'";
                                 $result2 = mysqli_query($conn, $sql);
                                 $row = mysqli_fetch_assoc($result2);
+                                $discountedPrice = $row['price'] - $_SESSION['promotion'];
                                 ?>
-                                <input type="text" id="formControlLgXsds" class="form-control form-control-lg" value="$<?php echo $row['price'] ?>" readonly />
+                                <input type="text" id="formControlLgXsds" class="form-control form-control-lg" value="$<?php echo $discountedPrice ?>" readonly />
                                 <label class="form-label" for="formControlLgXsds">Booking Cost</label>
                             </div>
 
