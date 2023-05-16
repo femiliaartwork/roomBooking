@@ -8,8 +8,9 @@ if (isset($_POST['submit'])) {
 
     $roomName = mysqli_real_escape_string($conn, $_POST['room']);
     $date = mysqli_real_escape_string($conn, $_POST['date']);
-    $edate = mysqli_real_escape_string($conn, $_POST['end_date']);
+    $etime = mysqli_real_escape_string($conn, $_POST['etime']);
     $time = mysqli_real_escape_string($conn, $_POST['time']);
+    $promo = mysqli_real_escape_string($conn, $_POST['promocode']);
 
 
     // SQL query if the room is chosen but its not available then cannot book
@@ -19,6 +20,11 @@ if (isset($_POST['submit'])) {
 
     $row = mysqli_fetch_assoc($result);
 
+    // SQL query for retrieving the promotion code
+    $sqlpromo = "SELECT * FROM promotion where promotion_code = '$promo' ";
+    $promoResult = mysqli_query($conn, $sqlpromo);
+    $promoRow = mysqli_fetch_assoc($promoResult);
+
     // print_r($result);
 
     if (mysqli_num_rows($result) == 0) {
@@ -27,8 +33,9 @@ if (isset($_POST['submit'])) {
         $_SESSION['room_id'] = $row['room_id'];
         $_SESSION['room_name'] = $roomName;
         $_SESSION['date'] = $date;
-        $_SESSION['edate'] = $edate;
+        $_SESSION['etime'] = $etime;
         $_SESSION['time'] = $time;
+        $_SESSION['promotion'] = $promoRow['discount'];
         header('location:./payment.php?msg=booking in progress');
     }
 }
@@ -105,17 +112,22 @@ if (isset($_POST['submit'])) {
 
                                         <div class="form-outline mb-4">
                                             <input type="date" id="datepicker" class="form-control form-control-lg" name="date" required>
-                                            <label class="form-label" for="datepicker">Booking date</label>
+                                            <label class="form-label" for="datepicker">Booking Date</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="date" id="datepicker2" class="form-control form-control-lg" name="end_date" required>
-                                            <label class="form-label" for="datepicker2">Booking end date</label>
+                                            <input type="time" id="datepicker2" class="form-control form-control-lg" name="time" required>
+                                            <label class="form-label" for="datepicker2">Booking Time</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="time" id="timepicker" class="form-control form-control-lg" name="time" required>
-                                            <label class="form-label" for="timepicker">Booking time</label>
+                                            <input type="time" id="timepicker" class="form-control form-control-lg" name="etime" required>
+                                            <label class="form-label" for="timepicker">Booking End Time</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            <input type="text" id="promo" class="form-control form-control-lg" name="promocode" required>
+                                            <label class="form-label" for="promo">Promo Code</label>
                                         </div>
 
 

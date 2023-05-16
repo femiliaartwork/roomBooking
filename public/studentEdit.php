@@ -10,12 +10,12 @@ if (isset($_POST['submit'])) {
     // get the keyed in date, time and the end date after the form is submitted
 
     $date = mysqli_real_escape_string($conn, $_POST['date']);
-    $endDate = mysqli_real_escape_string($conn, $_POST['end_date']);
+    $endTime = mysqli_real_escape_string($conn, $_POST['end_time']);
     $time = mysqli_real_escape_string($conn, $_POST['time']);
 
 
     // SQL query to update the new date and time 
-    $update = "UPDATE booking SET booking_date = '$date', booking_time = '$time', booking_edate = '$endDate' WHERE room_id = '" . $_GET['roomid'] . "' AND booking_id = '" . $_GET['bookingid'] . "'";
+    $update = "UPDATE booking SET booking_date = '$date', booking_time = '$time', booking_etime = '$endTime' WHERE room_id = '" . $_GET['roomid'] . "' AND booking_id = '" . $_GET['bookingid'] . "'";
 
     $result = mysqli_query($conn, $update);
 
@@ -91,8 +91,8 @@ if (isset($_POST['submit'])) {
                                             $result4 = mysqli_query($conn, $sql3);
                                             $row3 = mysqli_fetch_assoc($result4);
                                             ?>
-                                            <input type="text" id="current_booking_edate" class="form-control form-control-lg" name="cedate" value="<?php echo $row3['booking_edate'] ?>" readonly>
-                                            <label class="form-label" for="current_booking_edate">Current Booking End Date</label>
+                                            <input type="text" id="current_booking_time" class="form-control form-control-lg" name="cedate" value="<?php echo $row3['booking_time'] ?>" readonly>
+                                            <label class="form-label" for="current_booking_time">Current Booking Time</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
@@ -101,8 +101,8 @@ if (isset($_POST['submit'])) {
                                             $result5 = mysqli_query($conn, $sql4);
                                             $row4 = mysqli_fetch_assoc($result5);
                                             ?>
-                                            <input type="text" id="current_booking_time" class="form-control form-control-lg" name="ctime" value="<?php echo $row4['booking_time'] ?>" readonly>
-                                            <label class="form-label" for="current_booking_time">Current Booking Time</label>
+                                            <input type="text" id="current_ebooking_time" class="form-control form-control-lg" name="ctime" value="<?php echo $row4['booking_etime'] ?>" readonly>
+                                            <label class="form-label" for="current_ebooking_time">Current Booking End Time</label>
                                         </div>
 
 
@@ -113,13 +113,13 @@ if (isset($_POST['submit'])) {
 
 
                                         <div class="form-outline mb-4">
-                                            <input type="date" id="datepicker2" class="form-control form-control-lg" name="end_date" required>
-                                            <label class="form-label" for="datepicker2">Booking end date</label>
+                                            <input type="time" id="datepicker2" class="form-control form-control-lg" name="time" required>
+                                            <label class="form-label" for="datepicker2">Booking Start Time</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="time" id="timepicker" class="form-control form-control-lg" name="time" required>
-                                            <label class="form-label" for="timepicker">Booking time</label>
+                                            <input type="time" id="timepicker" class="form-control form-control-lg" name="end_time" required>
+                                            <label class="form-label" for="timepicker">Booking End Time</label>
                                         </div>
 
 
