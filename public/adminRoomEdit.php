@@ -4,25 +4,35 @@ include_once '../db_connection.php';
 
 session_start();
 
-
 if (isset($_POST['submit'])) {
-
-    // get the keyed in date and time after the form is submitted
-
     $roomName = mysqli_real_escape_string($conn, $_POST['room_name']);
     $roomCapacity = mysqli_real_escape_string($conn, $_POST['room_capacity']);
     $price = mysqli_real_escape_string($conn, $_POST['price']);
     $promotionCode = mysqli_real_escape_string($conn, $_POST['promotion_code']);
+    $selectDate = mysqli_real_escape_string($conn, $_POST['select_date']);
+
+    // Update the room details
+    $updateRoom = "UPDATE room SET room_name = '$roomName', room_capacity = '$roomCapacity', price = '$price', promotion_code = '$promotionCode', select_date = '$selectDate' WHERE room_id = '" . $_GET['roomid'] . "'";
+    $resultRoom = mysqli_query($conn, $updateRoom);
+
+    // Change availability to 0 for the selected date in every month
+    $dateParts = explode('-', $selectDate);
+    $selectedDay = $dateParts[2];
+    
+    for ($month = 1; $month <= 12; $month++) {
+        $year = $dateParts[0];
+        $blockedDate = "$year-$month-$selectedDay";
+    
+        // Update the availability for the blocked date to 0 in your availability table
+        // Modify the query based on your table structure
+        $updateAvailability = "UPDATE room SET availability = 0 WHERE date_column = '$blockedDate'";
+        mysqli_query($conn, $updateAvailability);
+    }
 
 
-    // SQL query to update the new room details  
-    $update = "UPDATE room SET room_name = '$roomName', room_capacity = '$roomCapacity', price = '$price', promotion_code = '$promotionCode' WHERE room_id = '" . $_GET['roomid'] ."'";
-    $result = mysqli_query($conn, $update);
-
-    // print_r($result);
-
-    header('location:./adminPage.php?update=Room update successfully!');
+    header('location:./adminPage.php?update=Room updated successfully!');
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -87,8 +97,8 @@ if (isset($_POST['submit'])) {
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="text" id="promocode" class="form-control form-control-lg" name="promotion_code" value="<?php echo $row['promotion_code']?>">
-                                            <label class="form-label" for="promocode">Promotion Code</label>
+                                            <input type="date" id="datepicker" class="form-control form-control-lg" name="select_date" value="<?php echo $row['select_date']?>"required>
+                                            <label class="form-label" for="datepicker">Select Blocked Out Date</label>
                                         </div>
 
                                         <div class="d-flex justify-content-end pt-3">

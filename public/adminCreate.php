@@ -8,12 +8,27 @@ if (isset($_POST['submit'])) {
 
     $roomName = mysqli_real_escape_string($conn, $_POST['room_name']);
     $roomCapacity = mysqli_real_escape_string($conn, $_POST['room_capacity']);
+    $selectDate = mysqli_real_escape_string($conn, $_POST['select_date']);
     $price = mysqli_real_escape_string($conn, $_POST['price']);
     $promotionCode = mysqli_real_escape_string($conn, $_POST['promotion_code']);
 
     // insert a new record into the "room" table
-    $insert = "INSERT INTO room SET launch_room = 0 , room_name = '$roomName', room_capacity = '$roomCapacity', price = '$price', promotion_code = '$promotionCode' , user_id = '" . $_SESSION['admin_id'] . "'";
+    $insert = "INSERT INTO room SET launch_room = 0 , room_name = '$roomName', room_capacity = '$roomCapacity' , select_date = '$selectDate', price = '$price', promotion_code = '$promotionCode' , user_id = '" . $_SESSION['admin_id'] . "'";
     $result = mysqli_query($conn, $insert);
+    
+    // Change availability to 0 for the selected date in every month
+     $dateParts = explode('-', $selectDate);
+    $selectedDay = $dateParts[2];
+    
+    for ($month = 1; $month <= 12; $month++) {
+        $year = $dateParts[0];
+        $blockedDate = "$year-$month-$selectedDay";
+    
+        // Update the availability for the blocked date to 0 in your availability table
+        // Modify the query based on your table structure
+        $updateAvailability = "UPDATE room SET availability = 0 WHERE date_column = '$blockedDate'";
+        mysqli_query($conn, $updateAvailability);
+    }
 
     header('location:./adminPage.php?msg=Room created successfully.');
 }
@@ -75,8 +90,11 @@ if (isset($_POST['submit'])) {
                                     <label for="capacity">Capacity:</label>
                                     <input type="number" name="room_capacity" id="room_capacity">
                                     <br>
-                                    <label for="promo_code">Promotion code:</label>
-                                    <input type="text" name="promotion_code" id="promotion_code">
+                                    <label for="select_date">Select blocked out dates:</label>
+                                    <input type="date" name="select_date" id="select_date">
+                                    <br>
+                                    <label for="reason">Reason:</label>
+                                    <input type="text" name="reason" id="reason">
                                     <br>
                                     <input type="submit" value="Create room" name="submit">
 
