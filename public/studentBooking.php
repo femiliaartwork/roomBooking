@@ -4,13 +4,18 @@ include_once '../db_connection.php';
 
 session_start();
 
-if (isset($_POST['submit'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $roomName = mysqli_real_escape_string($conn, $_POST['room']);
     $date = mysqli_real_escape_string($conn, $_POST['date']);
     $etime = mysqli_real_escape_string($conn, $_POST['etime']);
     $time = mysqli_real_escape_string($conn, $_POST['time']);
     $promo = mysqli_real_escape_string($conn, $_POST['promocode']);
+
+    // SQL query for retrieving the promotion code
+    $sqlpromo = "SELECT * FROM promotion where promotion_code = '$promo' ";
+    $promoResult = mysqli_query($conn, $sqlpromo);
+    $promoRow = mysqli_fetch_assoc($promoResult);
 
 
     // SQL query if the room is chosen but its not available then cannot book
@@ -20,21 +25,13 @@ if (isset($_POST['submit'])) {
 
     $row = mysqli_fetch_assoc($result);
 
-    // SQL query for retrieving the promotion code
-    $sqlpromo = "SELECT * FROM promotion where promotion_code = '$promo' ";
-    $promoResult = mysqli_query($conn, $sqlpromo);
-    $promoRow = mysqli_fetch_assoc($promoResult);
-
     // print_r($result);
 
     if (mysqli_num_rows($result) == 0) {
         $error[] = 'Room is not available for booking';
-        
-    } else if(mysqli_num_rows($promoResult) == 0) {
-        $error[] = 'The promotion code does not exist!';
-    }
-    
-    else {
+    } else if (mysqli_num_rows($promoResult) == 0) {
+        $error[] = 'The promotion does not exist';
+    } else {
         $_SESSION['room_id'] = $row['room_id'];
         $_SESSION['room_name'] = $roomName;
         $_SESSION['date'] = $date;
@@ -106,27 +103,36 @@ if (isset($_POST['submit'])) {
 
                                                 if ($resultCheck > 0) {
                                                     while ($row = mysqli_fetch_assoc($result2)) {
+                                                        if (!empty($_POST['room'])) {
+                                                            echo '<option value="' . htmlspecialchars($roomName) . '" selected>' . htmlspecialchars($roomName) . '</option>';
+                                                        }
+
                                                         echo '<option value="' . $row['room_name'] . '">' . $row['room_name'] . '</option>';
                                                     }
-                                                } else {
-                                                }
+                                                } 
                                                 ?>
                                             </select>
                                         </div>
 
 
                                         <div class="form-outline mb-4">
-                                            <input type="date" id="datepicker" class="form-control form-control-lg" name="date" required>
+                                            <input type="date" id="datepicker" class="form-control form-control-lg" name="date" required value="<?php if (!empty($_POST['date'])) {
+                                                                                                                                                    echo htmlspecialchars($_POST['date']);
+                                                                                                                                                } ?>">
                                             <label class="form-label" for="datepicker">Booking Date</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="time" id="datepicker2" class="form-control form-control-lg" name="time" required>
+                                            <input type="time" id="datepicker2" class="form-control form-control-lg" name="time" value="<?php if (!empty($_POST['time'])) {
+                                                                                                                                            echo htmlspecialchars($_POST['time']);
+                                                                                                                                        } ?>" required>
                                             <label class="form-label" for="datepicker2">Booking Time</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="time" id="timepicker" class="form-control form-control-lg" name="etime" required>
+                                            <input type="time" id="timepicker" class="form-control form-control-lg" name="etime" value="<?php if (!empty($_POST['etime'])) {
+                                                                                                                                            echo htmlspecialchars($_POST['etime']);
+                                                                                                                                        } ?>" required>
                                             <label class="form-label" for="timepicker">Booking End Time</label>
                                         </div>
 
