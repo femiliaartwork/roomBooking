@@ -106,18 +106,17 @@ CREATE TABLE `room` (
   `promotion_code` double(10,2) NOT NULL,
   `room_capacity` int(10) NOT NULL,
   `select_date` date NOT NULL,
-  `date_column` date NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `room`
 --
 
-INSERT INTO `room` (`room_id`, `room_name`, `user_id`, `availability`, `launch_room`, `price`, `promotion_code`, `room_capacity` , `select_date`, `date_column`) VALUES
-(1, 'strawberry', 1, 1, 1, 69.00, '', 5,'2023-08-23', NULL),
-(2, 'kiwi', 9, 0, 1, 70.00, '', 0,'2023-08-22', NULL),
-(3, 'mango', 1, 1, 1, 53.00, '', 0,'2023-08-21', NULL),
-(4, 'durian', 1, 1, 1, 100.00, '', 7,'2023-08-20', NULL);
+INSERT INTO `room` (`room_id`, `room_name`, `user_id`, `availability`, `launch_room`, `price`, `promotion_code`, `room_capacity` , `select_date`) VALUES
+(1, 'strawberry', 1, 1, 1, 69.00, '', 5,'2023-08-23'),
+(2, 'kiwi', 9, 0, 1, 70.00, '', 0,'2023-08-22'),
+(3, 'mango', 1, 1, 1, 53.00, '', 0,'2023-08-21'),
+(4, 'durian', 1, 1, 1, 100.00, '', 7,'2023-08-20');
 
 -- --------------------------------------------------------
 
