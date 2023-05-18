@@ -18,12 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $promoRow = mysqli_fetch_assoc($promoResult);
 
 
-    // SQL query if the room is chosen but its not available then cannot book
-    $select = "SELECT * FROM room WHERE room_name ='$roomName' && availability = 1";
-
+    // SQL query for ROOM if the room is chosen but its not available then cannot book
+    $select = "SELECT * FROM room WHERE room_name ='$roomName' && availability = 1 ";
     $result = mysqli_query($conn, $select);
-
     $row = mysqli_fetch_assoc($result);
+
 
     // print_r($result);
 
@@ -31,7 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error[] = 'Room is not available for booking';
     } else if (mysqli_num_rows($promoResult) == 0) {
         $error[] = 'The promotion does not exist';
-    } else {
+    } else if ($date = $row['select_date']) {
+        $error[] = 'This date is a public holiday!';
+    }    
+    else {
         $_SESSION['room_id'] = $row['room_id'];
         $_SESSION['room_name'] = $roomName;
         $_SESSION['date'] = $date;
