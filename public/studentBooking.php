@@ -30,10 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error[] = 'Room is not available for booking';
     } else if (mysqli_num_rows($promoResult) == 0) {
         $error[] = 'The promotion does not exist';
-    } else if ($date = $row['select_date']) {
+    } else if ($row['select_date'] == $date) {
         $error[] = 'This date is a public holiday!';
-    }    
-    else {
+    } else {
         $_SESSION['room_id'] = $row['room_id'];
         $_SESSION['room_name'] = $roomName;
         $_SESSION['date'] = $date;
@@ -105,13 +104,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                                 if ($resultCheck > 0) {
                                                     while ($row = mysqli_fetch_assoc($result2)) {
-                                                        if (!empty($_POST['room'])) {
-                                                            echo '<option value="' . htmlspecialchars($roomName) . '" selected>' . htmlspecialchars($roomName) . '</option>';
-                                                        }
-
+                                                        // if (!empty($_POST['room'])) {
+                                                        //     echo '<option value="' . htmlspecialchars($roomName) . '" selected>' . $row['room_name'] . '</option>';
+                                                        // }
                                                         echo '<option value="' . $row['room_name'] . '">' . $row['room_name'] . '</option>';
+                                                        
                                                     }
-                                                } 
+                                                }
                                                 ?>
                                             </select>
                                         </div>
