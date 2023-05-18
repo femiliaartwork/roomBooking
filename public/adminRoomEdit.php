@@ -15,20 +15,6 @@ if (isset($_POST['submit'])) {
     $updateRoom = "UPDATE room SET room_name = '$roomName', room_capacity = '$roomCapacity', price = '$price', promotion_code = '$promotionCode', select_date = '$selectDate' WHERE room_id = '" . $_GET['roomid'] . "'";
     $resultRoom = mysqli_query($conn, $updateRoom);
 
-    // Change availability to 0 for the selected date in every month
-    $dateParts = explode('-', $selectDate);
-    $selectedDay = $dateParts[2];
-    
-    for ($month = 1; $month <= 12; $month++) {
-        $year = $dateParts[0];
-        $blockedDate = "$year-$month-$selectedDay";
-    
-        // Update the availability for the blocked date to 0 in your availability table
-        // Modify the query based on your table structure
-        $updateAvailability = "UPDATE room SET availability = 0 WHERE date_column = '$blockedDate'";
-        mysqli_query($conn, $updateAvailability);
-    }
-
 
     header('location:./adminPage.php?update=Room updated successfully!');
 }

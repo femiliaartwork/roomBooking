@@ -4,25 +4,18 @@ include_once '../db_connection.php';
 
 session_start();
 
-
 if (isset($_POST['submit'])) {
+    $promotionCode = mysqli_real_escape_string($conn, $_POST['promotion_code']);
+    $discount = mysqli_real_escape_string($conn, $_POST['discount']);
 
-    // get the keyed in date, time and the end date after the form is submitted
-
-    $date = mysqli_real_escape_string($conn, $_POST['date']);
-    $endDate = mysqli_real_escape_string($conn, $_POST['end_date']);
-    $time = mysqli_real_escape_string($conn, $_POST['time']);
+    // Update the room details
+    $updatePromotion = "UPDATE promotion SET discount = '$discount', promotion_code = '$promotionCode' WHERE promotion_code = '" . $_GET['promotion_code'] . "'";
+    $resultPromotion = mysqli_query($conn, $updatePromotion);
 
 
-    // SQL query to update the new date and time 
-    $update = "UPDATE booking SET booking_date = '$date', booking_time = '$time', booking_edate = '$endDate' WHERE room_id = '" . $_GET['roomid'] . "' AND booking_id = '" . $_GET['bookingid'] . "'";
-
-    $result = mysqli_query($conn, $update);
-
-    // print_r($result);
-
-    header('location:./adminPage.php?update=Booking update successfully!');
+    header('location:./adminPage.php?update=Promotion updated successfully!');
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +36,7 @@ if (isset($_POST['submit'])) {
     <script src="../js/jquery-3.2.1.min.js"></script>
     <script src=".."></script>
 
-    <title>Edit Room Booking Page</title>
+    <title>Edit Promotion Page</title>
 </head>
 
 <body>
@@ -62,40 +55,29 @@ if (isset($_POST['submit'])) {
                                 </div>
                                 <div class="col-xl-6 ">
                                     <div class="card-body p-md-5 text-black">
-                                        <h3 class="mb-5 text-uppercase">Edit Room Booking</h3>
+                                        <h3 class="mb-5 text-uppercase">Edit Promotion Details</h3>
 
 
                                         <div class="form-outline mb-4">
                                             <?php
-                                            $sql = "SELECT * from room where room_id = '" . $_GET['roomid'] . "'";
+                                            $sql = "SELECT * from promotion where promotion_code = '" . $_GET['promotion_code'] . "'";
                                             $result2 = mysqli_query($conn, $sql);
-                                            $row = mysqli_fetch_assoc($result2);
+                                            $row = mysqli_fetch_assoc($result2);    
                                             ?>
-                                            <input type="text" id="room" class="form-control form-control-lg" name="room" value="<?php echo $row['room_name'] ?>" readonly>
-                                            <label class="form-label" for="room">Room Name</label>
-                                        </div>
-
-
-                                        <div class="form-outline mb-4">
-                                            <input type="date" id="datepicker" class="form-control form-control-lg" name="date" required>
-                                            <label class="form-label" for="datepicker">Booking date</label>
+                                            <input type="text" id="promotion_code" class="form-control form-control-lg" name="promotion_code" value="<?php echo $row['promotion_code']?>" required>
+                                            <label class="form-label" for="promotion_code">Promotion Name</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="date" id="datepicker2" class="form-control form-control-lg" name="end_date" required>
-                                            <label class="form-label" for="datepicker2">Booking end date</label>
-                                        </div>
 
-                                        <div class="form-outline mb-4">
-                                            <input type="time" id="timepicker" class="form-control form-control-lg" name="time" required>
-                                            <label class="form-label" for="timepicker">Booking time</label>
+                                            <input type="double" id="discount" class="form-control form-control-lg" name="discount" min="1" max="100" value="<?php echo $row['discount']?>"required>
+                                            <label class="form-label" for="discount">Discount</label>
                                         </div>
-
 
                                         <div class="d-flex justify-content-end pt-3">
 
-                                            <input class="btn btn-light btn-lg" type="reset" value="Reset Edit Booking">
-                                            <input class="btn btn-warning btn-lg ms-2" type="submit" value="Edit room" name="submit">
+                                            <input class="btn btn-light btn-lg" type="reset" value="Reset Edit Promotion">
+                                            <input class="btn btn-warning btn-lg ms-2" type="submit" value="Edit promotion" name="submit">
 
                                         </div>
 

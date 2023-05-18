@@ -85,6 +85,45 @@ session_start();
                     echo "No results found";
                 }
                 ?>
+                </tbody>
+        </table>
+    </div>
+
+    <h4 style="padding-left:1rem;">Edit promotion code details</h4>
+    <div class="container">
+        <table class="table table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Promotion Name</th>
+                    <th scope="col">Discount details</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+                $sql = "SELECT * from promotion";
+                $result = mysqli_query($conn, $sql);           
+
+                // check if there are any result that came back
+                $resultCheck = mysqli_num_rows($result);
+
+                if ($resultCheck > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        if($row['promotion_code']){
+                        echo '<tr>
+                        <th scope="row">' . $row['promotion_code'] . '</th>
+                        <th scope="row">' . $row['discount'] . '</th>
+                        <td>
+                            <a href="./promotionEdit.php?promotion_code='. $row['promotion_code'] .'" class="link-primary"><i class="fa-solid fa-pen-to-square fs-5 me-3">Edit</i></a>
+                        </td>
+                    </tr>';
+                        }
+                    }
+                   
+                } else {
+                    echo "No results found";
+                }
+            ?>
 
             </tbody>
         </table>
