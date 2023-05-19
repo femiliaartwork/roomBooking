@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                         // if (!empty($_POST['room'])) {
                                                         //     echo '<option value="' . htmlspecialchars($roomName) . '" selected>' . $row['room_name'] . '</option>';
                                                         // }
-                                                        echo '<option value="' . $row['room_name'] . '">' . $row['room_name'] . '</option>';
+                                                        echo '<option value="' . $row['room_name'] . '">' . $row['room_name'] .' $'.$row['price']. '</option>';
                                                         
                                                     }
                                                 }
